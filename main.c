@@ -61,8 +61,8 @@ int main() {
     sprintf(command, "python3 API/fetch_data.py %s %s %s", symbol, period, interval);
     
     // Execute Python script
+    printf(command);
     printf("\nFetching stock data...\n");
-    printf(CLEAR_CONSOLE);
     system(command);
     
     return 0;

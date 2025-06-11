@@ -2,6 +2,7 @@ import yfinance as yf
 import sys
 import pandas as pd
 import matplotlib.pyplot as plt
+import pytz
 
 def shortenNumber(number): #shortens numbers
     if number >= 1_000_000_000_000:
@@ -24,18 +25,23 @@ def main():
     
     symbol = sys.argv[1]
     period = sys.argv[2]
-    interval = sys.argv[3]
-    
+    interval = sys.argv[3]  
+
     try:
         # Fetch stock data
         stock = yf.Ticker(symbol)
         data = stock.history(period=period, interval=interval)
         
+       
+
         if data.empty:
             print(f"No data found for {symbol}")
             return
         
-       
+       #set time zone
+        israel_tz = pytz.timezone('Asia/Jerusalem')
+        data.index = data.index.tz_convert(israel_tz)
+    
         # Show basic info
         info = stock.info
         company = info.get('longName', 'N/A')
